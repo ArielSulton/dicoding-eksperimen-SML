@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
     paths:
       - 'sms_spam_raw/**'
-      - 'preprocessing/automate_arielsulton.py'
+      - 'preprocessing/automate_MochammadArielSulton.py'
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     - name: Run preprocessing automation
       run: |
         cd preprocessing
-        python automate_arielsulton.py
+        python automate_MochammadArielSulton.py
         
     - name: Upload preprocessed dataset
       uses: actions/upload-artifact@v4
