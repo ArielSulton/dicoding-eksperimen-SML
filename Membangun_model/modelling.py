@@ -11,7 +11,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-import argparse
 
 # Setup DagsHub
 try:
@@ -23,15 +22,18 @@ except Exception as e:
     print("Continuing with local MLflow...")
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--data-url', required=True)
-    args = parser.parse_args()
+    # Set experiment
+    mlflow.set_experiment("SMS Spam Classification - Basic Autolog")
     
     # Enable autolog - automatic logging
     mlflow.autolog()
     
-    print(f"Loading data from {args.data_url}...")
-    df = pd.read_csv(args.data_url)
+    print("Loading data from sms_spam_preprocessing.csv...")
+    df = pd.read_csv('sms_spam_preprocessing.csv')
+    
+    # Clean NaN values
+    df = df.dropna(subset=['message_clean', 'label_encoded'])
+    print(f"Data loaded: {len(df)} samples")
     
     X = df['message_clean']
     y = df['label_encoded']
